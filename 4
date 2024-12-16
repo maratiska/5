@@ -1,0 +1,67 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        String fileName = "students.txt";
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        int N = Integer.parseInt(reader.readLine());
+        List<Student> students = new ArrayList<>();
+        for (int i = 0; i < N; i++) {
+            String[] data = reader.readLine().split(" ");
+            String lastName = data[0];
+            String firstName = data[1];
+            int school = Integer.parseInt(data[2]);
+            int score = Integer.parseInt(data[3]);
+            if (school == 50) {
+                students.add(new Student(lastName, firstName, score));
+            }
+        }
+        students.sort((a, b) -> b.score - a.score);
+        int maxScore = students.get(0).score;
+        List<Student> bestStudents = new ArrayList<>();
+        for (Student student : students) {
+            if (student.score == maxScore) {
+                bestStudents.add(student);
+            } else {
+                break;
+            }
+        }
+        if (bestStudents.size() > 2) {
+            System.out.println(bestStudents.size());
+        } else {
+            for (Student student : bestStudents) {
+                System.out.println(student.lastName + " " + student.firstName);
+            }
+            if (bestStudents.size() == 1) {
+                int nextScore = -1;
+                List<Student> nextBestStudents = new ArrayList<>();
+                for (Student student : students) {
+                    if (student.score != maxScore) {
+                        nextScore = student.score;
+                        break;
+                    }
+                }
+                for (Student student : students) {
+                    if (student.score == nextScore) {
+                        nextBestStudents.add(student);
+                    }
+                }
+                if (nextBestStudents.size() > 1) {
+                    System.out.println(nextBestStudents.size());
+                } else {
+                    System.out.println(nextBestStudents.get(0).lastName + " " + nextBestStudents.get(0).firstName);
+                }
+            }
+        }
+    }
+    static class Student {
+        String lastName;
+        String firstName;
+        int score;
+        public Student(String lastName, String firstName, int score) {
+            this.lastName = lastName;
+            this.firstName = firstName;
+            this.score = score;
+        }
+    }
+}
