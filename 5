@@ -1,0 +1,30 @@
+import java.io.*;
+import java.util.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        String fileName = "text.txt";
+        BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        Set<Character> alphabet = new HashSet<>();
+        for (char c = 'а'; c <= 'я'; c++) {
+            alphabet.add(c);
+        }
+        String line;
+        while ((line = reader.readLine()) != null) {
+            for (char c : line.toLowerCase().toCharArray()) {
+                if (alphabet.contains(c)) {
+                    alphabet.remove(c);
+                }
+            }
+        }
+        reader.close();
+        System.out.println("Количество букв, которые не встречаются в тексте: " + alphabet.size());
+        if (!alphabet.isEmpty()) {
+            System.out.println("Не встречающиеся буквы:");
+            for (char c : alphabet) {
+                System.out.print(c + " ");
+            }
+        } else {
+            System.out.println("Все буквы алфавита встречаются в тексте.");
+        }
+    }
+}
