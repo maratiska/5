@@ -1,0 +1,33 @@
+import java.io.*;
+import java.nio.file.*;
+import java.util.*;
+import java.util.stream.*;
+public class Main {
+    public static void main(String[] args) throws IOException {
+        String fileName = "people.txt";
+        List<String> lines = Files.readAllLines(Paths.get(fileName));
+        Map<Integer, List<String>> groupedNames = lines.stream()
+                // Разделяем каждую строку на имя и номер
+                .map(line -> line.split(":"))
+                .collect(Collectors.groupingBy(
+                        parts -> {
+                            if (parts.length == 2 && !parts[1].isEmpty()) {
+                                return Integer.parseInt(parts[1]);
+                            } else {
+                                return 0;
+                            }
+                        },
+                        Collectors.mapping(
+                                parts -> capitalize(parts[0].toLowerCase()), // Приводим имя в нужный регистр
+                                Collectors.toList()
+                        )
+                ));
+        System.out.println(groupedNames);
+    }
+    private static String capitalize(String name) {
+        if (name == null || name.isEmpty()) {
+            return name;
+        }
+        return name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+    }
+}
