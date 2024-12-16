@@ -1,0 +1,30 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+public class Main {
+    public static void main(String[] args) {
+        List<Integer> L1 = new ArrayList<>();
+        L1.add(1);
+        L1.add(2);
+        L1.add(3);
+        L1.add(4);
+        L1.add(5);
+        L1.add(6);
+        
+        List<Integer> L2 = new ArrayList<>();
+        L2.add(4);
+        L2.add(5);
+        L2.add(6);
+        L2.add(7);
+        L2.add(8);
+
+        HashSet<Integer> setL2 = new HashSet<>(L2);
+        List<Integer> L = new ArrayList<>();
+        for (Integer element : L1) {
+            if (!setL2.contains(element)) {
+                L.add(element);
+            }
+        }
+        System.out.println(L);
+    }
+}
