@@ -1,0 +1,25 @@
+import java.util.*;
+public class Main {
+    public static void main(String[] args) {
+        Queue<Integer> queue = new LinkedList<>(Arrays.asList(1, 2, 3, 4, 5, 1)); // Круговая очередь (1 -> 2 -> 3 -> 4 -> 5 -> 1)
+        if (hasEqualAdjacent(queue)) {
+            System.out.println("Есть хотя бы один элемент, который равен следующему за ним.");
+        } else {
+            System.out.println("Нет элементов, равных следующему за ними.");
+        }
+    }
+    public static boolean hasEqualAdjacent(Queue<Integer> queue) {
+        if (queue.isEmpty()) {
+            return false;
+        }
+        List<Integer> list = new ArrayList<>(queue);
+        int size = list.size();
+        for (int i = 0; i < size; i++) {
+            int nextIndex = (i + 1) % size; 
+            if (list.get(i).equals(list.get(nextIndex))) {
+                return true; 
+            }
+        }
+        return false; 
+    }
+}
